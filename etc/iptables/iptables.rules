@@ -1,0 +1,37 @@
+#===========================================
+# TABLA NAT
+#=========================================== 
+*nat
+#-------------------------------------------
+# Política por defecto
+#-------------------------------------------
+:PREROUTING ACCEPT [0:0]
+:INPUT ACCEPT [0:0]
+:OUTPUT ACCEPT [0:0]
+:POSTROUTING ACCEPT [0:0]
+#-------------------------------------------
+# Reglas
+#-------------------------------------------
+# Editar las reglas siguientes con los valores adecuados para hacer SNAT y DNAT (esto último en caso de disponer de SQUID+DANSGUARDIAN)
+# Este ejemplo supone una interfaz externa enp0s3 con IP 10.0.2.15 
+# y una interfaz interna con IP 192.168.1.1
+# -A POSTROUTING -o enp0s3 -j SNAT --to-source 10.0.2.15
+# -A PREROUTING -p tcp -m tcp --dport 80 -j DNAT --to-destination 192.168.1.1:8080
+COMMIT
+
+
+#===========================================
+# TABLA FILTER
+#=========================================== 
+*filter
+#-------------------------------------------
+# Política por defecto
+#-------------------------------------------
+:INPUT ACCEPT [0:0]
+:FORWARD ACCEPT [0:0]
+:OUTPUT ACCEPT [0:0]
+#-------------------------------------------
+# Reglas
+#-------------------------------------------
+# Añadir aquí las reglas para filtrar el tráfico destinado o iniciado en el equipo cortafuegos
+COMMIT
